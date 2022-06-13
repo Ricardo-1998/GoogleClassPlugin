@@ -38,7 +38,7 @@ class edit extends moodleform {
         $select -> setMultiple(true);
 
         //Add element date start
-        $mform->addElement('date_time_selector', 'dateStart', 'start');
+        $mform->addElement('date_time_selector', 'dateStart', get_string('dateStart', 'local_googleclass'));
 
         //Add element date end
         $mform->addElement('date_selector', 'dateEnd', 'end');

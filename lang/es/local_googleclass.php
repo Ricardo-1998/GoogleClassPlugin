@@ -27,4 +27,4 @@ defined('MOODLE_INTERNAL') || die();
 $string['pluginname']='Google class';
 
 $string['title']='Google Class';
-$string['dateStart']='Start Date';
+
