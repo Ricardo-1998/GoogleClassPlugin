@@ -33,18 +33,23 @@ class edit extends moodleform {
         $mform = $this->_form; // Don't forget the underscore! 
         $current = $this->_customdata['current'];
         //Add elemente to get de days
-        $days = array('MO'=>'Monday','TU'=>'Tuesday','WE'=>'Wednesday','TH'=>'Thursday','FR'=> 'Friday','SA'=> 'Saturday', 'SU'=>'Sunday');
-        $select = $mform->addElement('select', 'days', 'days', $days);
-        $select -> setMultiple(true);
+        $days = array('MO'=>get_string('MO', 'local_googleclass'),'TU'=>get_string('TU', 'local_googleclass'),'WE'=>get_string('WE', 'local_googleclass'),'TH'=>get_string('TH', 'local_googleclass'),'FR'=> get_string('FR', 'local_googleclass'),'SA'=> get_string('SA', 'local_googleclass'), 'SU'=>get_string('SU', 'local_googleclass'));
+        //$select = $mform->addElement('select', 'days', get_string('days', 'local_googleclass'), $days);
+        //$select -> setMultiple(true);
+        $options = array(
+            'multiple' => true,
+            'noselectionstring' => get_string('noneselection', 'local_googleclass'),
+        );
+        $mform->addElement('autocomplete', 'days', get_string('days', 'local_googleclass'), $days, $options);
 
         //Add element date start
         $mform->addElement('date_time_selector', 'dateStart', get_string('dateStart', 'local_googleclass'));
 
         //Add element date end
-        $mform->addElement('date_selector', 'dateEnd', 'end');
+        $mform->addElement('date_selector', 'dateEnd', get_string('dateEnd', 'local_googleclass'));
 
         //Add element to get de duration of the event
-        $mform->addElement('duration', 'duration', 'time');
+        $mform->addElement('duration', 'duration', get_string('duration', 'local_googleclass'));
 
         $mform->addElement('hidden', 'id', $current->id);
         $mform->setType('id', PARAM_INT);

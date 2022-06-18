@@ -28,3 +28,16 @@ $string['pluginname']='Google class';
 
 $string['title']='Google Class';
 $string['dateStart']='Start Date';
+$string['days']='Class Days';
+$string['dateEnd']='End Date';
+$string['duration']='Class Duration';
+$string['noneselection']='Select class days';
+
+//days
+$string['MO']='Monday';
+$string['TU']='Tuesday';
+$string['WE']='Wednesday';
+$string['TH']='Thursday';
+$string['FR']='Friday';
+$string['SA']='Saturday';
+$string['SU']='Sunday';

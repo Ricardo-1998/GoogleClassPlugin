@@ -28,3 +28,17 @@ $string['pluginname']='Google class';
 
 $string['title']='Google Class';
 
+$string['dateStart']='Fecha de inicio';
+$string['days']='Dias de clase';
+$string['dateEnd']='Fecha final';
+$string['duration']='Duración de la clase';
+$string['noneselection']='Selecciona los dias de clase';
+
+//Days
+$string['MO']='Lunes';
+$string['TU']='Martes';
+$string['WE']='Miercoles';
+$string['TH']='Jueves';
+$string['FR']='Viernes';
+$string['SA']='Sabado';
+$string['SU']='Domingo';
