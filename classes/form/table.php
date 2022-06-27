@@ -14,12 +14,17 @@ class test_table extends table_sql {
     function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('id', 'datestart', 'dateend', 'course');
+        $columns = array('id','datestart', 'dateend', 'duration','course');
         $this->define_columns($columns);
 
         // Define the titles of columns to show in header.
-        $headers = array('id', 'Fecha Inicio', 'Fecha Final', 'eliminar');
+        $headers = array(get_string('colId','local_googleclass'),get_string('colDateStart','local_googleclass'),
+        get_string('colDateEnd','local_googleclass'),get_string('colDuration','local_googleclass'),
+        get_string('colEliminate','local_googleclass'));
+        
         $this->define_headers($headers);
+
+
     }
 
     /**
@@ -49,8 +54,9 @@ class test_table extends table_sql {
         GLOBAL $CFG;
         // For security reasons we don't want to show the password hash.
         if ($colname == 'course') {
-            return '<a href="delete.php?id='.$value->course.'&event='.$value->id.'" class="delete" title="Eliminar" data-toggle="tooltip">Eliminar</a>';
+            return '<a href="delete.php?id='.$value->course.'&event='.$value->id.'" class="delete" title="Eliminar" data-toggle="tooltip">'.get_string('colEliminate','local_googleclass').'</a>';
         }
+        
     }
 
 }

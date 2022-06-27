@@ -41,3 +41,24 @@ $string['TH']='Thursday';
 $string['FR']='Friday';
 $string['SA']='Saturday';
 $string['SU']='Sunday';
+
+//Rules
+$string['validateDays']='You need to select at least 1 day';
+$string['validateDuration']='The duration time has to be more than 0';
+$string['validateDate']='The final date has to be greater than the initial date';
+
+
+//Table Headers
+$string['colId']='Id';
+$string['colDateStart']='Date Start';
+$string['colDateEnd']='Date End';
+$string['colDuration']='Duration in minutes';
+$string['colEliminate']='Eliminate';
+
+//Api response messages
+$string['succesMessage']='Event created successfully';
+$string['errorMessage']='Error creating event';
+
+//DB response message
+$string['succesDeleteMessage']='Event deleted successfully';
+$string['errorDeleteMessage']='Error deleting event';

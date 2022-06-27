@@ -42,3 +42,24 @@ $string['TH']='Jueves';
 $string['FR']='Viernes';
 $string['SA']='Sabado';
 $string['SU']='Domingo';
+
+//Rules
+$string['validateDays']='Debes seleccionar al menos 1 dia';
+$string['validateDuration']='El tiempo de duracion debe ser mayor a 0';
+$string['validateDate']='La fecha final tiene que ser mayor que la fecha inicial';
+
+
+//Table Headers
+$string['colId']='Id';
+$string['colDateStart']='Fecha inicio';
+$string['colDateEnd']='Fecha final';
+$string['colDuration']='Duracion en minutos';
+$string['colEliminate']='Eliminar';
+
+//Api response messages
+$string['succesMessage']='Evento creado exitosamente';
+$string['errorMessage']='Error al crear evento';
+
+//DB response message
+$string['succesDeleteMessage']='Evento eliminado exitosamente';
+$string['errorDeleteMessage']='Error al eliminar el evento';

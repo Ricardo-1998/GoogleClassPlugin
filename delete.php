@@ -55,7 +55,13 @@ $params = [
 
 $response = $service->call('delete',$params,[]); 
 //Eliminarlo de la base de datos
-$DB->delete_records('googleclass', ['id'=>$event->id]);
+if($DB->delete_records('googleclass', ['id'=>$event->id]) == TRUE){
+    \core\notification::success(get_string('succesDeleteMessage','local_googleclass'),'local_googlecalendar');
+
+}else{
+    \core\notification::error(get_string('errorDeleteMessage','local_googleclass'),'local_googlecalendar');
+
+}
 
 
 //Volver

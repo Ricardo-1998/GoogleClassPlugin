@@ -44,7 +44,7 @@ $mform->set_data(array('id'=>$courseid));
 
 // Work out the sql for the table.
 $table = new test_table('uniqueid');
-$table->set_sql('id,datestart,dateend,course', "{googleclass}", 'course=:course',['course'=>$courseid]);
+$table->set_sql('id,datestart,dateend,duration,course', "{googleclass}", 'course=:course',['course'=>$courseid]);
 $table->define_baseurl("$CFG->wwwroot/local/googleclass/table.php");
 
 //Form processing and displaying is done here
@@ -65,18 +65,18 @@ if ($mform->is_cancelled()) {
     $querycourse = $DB->get_record_sql('SELECT * FROM {course} WHERE id = ?;',[$courseid]);
 
     $recordinsert -> course = $courseid;
-    $recordinsert -> dateend = gmdate("Ymd",$fromform->dateEnd);
-    $recordinsert -> datestart = gmdate("Y-m-d",$fromform->dateStart) .'T'. gmdate("H:i:s.000",$fromform->dateStart).'Z';
+    $recordinsert -> dateend = gmdate("d/m/Y",$fromform->dateEnd);
+    $recordinsert -> datestart = gmdate("d/m/Y",$fromform->dateStart); 
     $recordinsert -> days = $recurrence;
     $recordinsert -> coursename = $querycourse->fullname;
-    $recordinsert -> duration = $fromform->duration;
+    $recordinsert -> duration = $fromform->duration / 60;
     $summary = $querycourse->fullname;
 
-    $end -> dateTime = gmdate("Y-m-d",($fromform->dateStart + $fromform->duration)) .'T'. gmdate("H:m:s.000",($fromform->dateStart + $fromform->duration)).'Z';
+    $end -> dateTime = gmdate("Y-m-d",($fromform->dateStart + $fromform->duration)) .'T'. gmdate("H:i:s.000",($fromform->dateStart + $fromform->duration)).'Z';
     $end -> timeZone = "America/El_Salvador";
 
 
-    $start -> dateTime = gmdate("Y-m-d",$fromform->dateStart) .'T'. gmdate("H:m:s.000",$fromform->dateStart).'Z';
+    $start -> dateTime = gmdate("Y-m-d",$fromform->dateStart) .'T'. gmdate("H:i:s.000",$fromform->dateStart).'Z';
     $start -> timeZone = "America/El_Salvador";
 
     $context = context_course::instance($courseid);
@@ -122,14 +122,24 @@ if ($mform->is_cancelled()) {
         $JSON_response = json_decode($response);
                     
         $recordinsert->google_event_id = $JSON_response->id;
-        $DB -> insert_record('googleclass', $recordinsert);    
+        
+        //Validate response
+        if($JSON_response->status == 'confirmed'){
+            $DB -> insert_record('googleclass', $recordinsert);
+            \core\notification::success(get_string('succesMessage','local_googleclass'),'local_googlecalendar');
+            
+        }else{
+            \core\notification::error(get_string('errorMessage','local_googleclass'),'local_googlecalendar');
+            
+        }
+        
     }
 
 }
 
 function createRule($fromform){
-    $baseRule = "RRULE:FREQ=WEEKLY;UNTIL=";
-    $until = gmdate("Ymd",$fromform->dateEnd);
+    $baseRule = "RRULE:FREQ=DAILY;UNTIL=";
+    $until = gmdate("Ymd",($fromform->dateEnd + 86400));
     $array = $fromform->days;
     $temp = "";
     foreach ($array as $value){
@@ -141,6 +151,8 @@ function createRule($fromform){
     return $finalRule;
 
 }
+
+
 
 //Display header
 echo $OUTPUT->header();

@@ -26,6 +26,8 @@
 //moodleform is defined in formslib.php
 require_once("$CFG->libdir/formslib.php");
 
+//require_once('config.php');
+
 class edit extends moodleform {
     //Add elements to form
     public function definition() {
@@ -34,13 +36,13 @@ class edit extends moodleform {
         $current = $this->_customdata['current'];
         //Add elemente to get de days
         $days = array('MO'=>get_string('MO', 'local_googleclass'),'TU'=>get_string('TU', 'local_googleclass'),'WE'=>get_string('WE', 'local_googleclass'),'TH'=>get_string('TH', 'local_googleclass'),'FR'=> get_string('FR', 'local_googleclass'),'SA'=> get_string('SA', 'local_googleclass'), 'SU'=>get_string('SU', 'local_googleclass'));
-        //$select = $mform->addElement('select', 'days', get_string('days', 'local_googleclass'), $days);
-        //$select -> setMultiple(true);
         $options = array(
             'multiple' => true,
             'noselectionstring' => get_string('noneselection', 'local_googleclass'),
+            
         );
         $mform->addElement('autocomplete', 'days', get_string('days', 'local_googleclass'), $days, $options);
+       // $mform->addRule('days', "error",'nonzero', null, 'server');
 
         //Add element date start
         $mform->addElement('date_time_selector', 'dateStart', get_string('dateStart', 'local_googleclass'));
@@ -57,8 +59,28 @@ class edit extends moodleform {
         $this -> add_action_buttons();
         $this->set_data($current);
     }
+    
+
     //Custom validation should be added here
     function validation($data, $files) {
-        return array();
+        $errors = array();
+        if(empty($data['days'])){
+            $errors['days'] = get_string('validateDays', 'local_googleclass');
+        }
+
+        if($data['dateEnd'] < $data['dateStart']){
+            $errors['dateEnd'] = get_string('validateDate', 'local_googleclass');
+            
+
+        }
+        if($data['duration'] <= 0){
+            $errors['duration'] = get_string('validateDuration', 'local_googleclass');
+        }
+
+        
+
+        return $errors;
     }
+        
+        
 }
